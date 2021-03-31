@@ -1,0 +1,7 @@
+{
+  "name": "TymeApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
