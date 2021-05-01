@@ -1,8 +1,7 @@
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import { useContext, useState } from 'react';
+import { IonApp, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import Page from './pages/Page';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -22,21 +21,23 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import RoutingSystem from './components/RoutingSystem';
+import { CustomContext } from './contexts/CustomContext';
+
+
 
 const App: React.FC = () => {
+  // React Routers are found in the Tabs component
+  const [isTabComponent, setIsTabComponent] = useState<boolean>(true)
+
   return (
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
           <Menu />
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/page/Inbox" />
-            </Route>
-            <Route path="/page/:name" exact={true}>
-              <Page />
-            </Route>
-          </IonRouterOutlet>
+          <CustomContext.Provider value={{isTabComponent, setIsTabComponent}}>
+            <RoutingSystem /> 
+          </CustomContext.Provider>
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>
